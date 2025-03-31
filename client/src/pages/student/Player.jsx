@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../../context/AppContext";
 import { useParams } from "react-router-dom";
 import { assets } from "../../assets/assets";
-import humanizeDuration from "humanize-duration"; // Ensure you have installed this: npm install humanize-duration
+import humanizeDuration from "humanize-duration";
 
 const Player = () => {
   const { enrolledCourses, calculateChapterTime } = useContext(AppContext);
@@ -33,7 +33,7 @@ const Player = () => {
   return (
     <>
       <div className="p-4 sm:p-10 flex flex-col-reverse md:grid md:grid-cols-2 gap-10 md:px-36">
-        {/* Left Column - Course Structure */}
+        {/* Left Column*/}
         <div className="text-gray-800">
           <h2 className="text-xl font-semibold">Course Structure</h2>
 
