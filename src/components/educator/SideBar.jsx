@@ -5,7 +5,7 @@ import { assets } from '../../assets/assets';
 
 const SideBar = () => {
 
-  const {isEducator} = useContext(AppContext)
+  const {isEducator} = useContext(AppContext) 
 
   const menuItems = [
     {name: 'Dashboard', path: '/educator', icon: assets.home_icon},
