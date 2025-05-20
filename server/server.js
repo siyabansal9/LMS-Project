@@ -12,7 +12,7 @@ import { clerkWebhooks, stripeWebhooks } from './controllers/webhooks.js';
 
 const app = express();
 
-app.use(cors());
+app .use(cors());
 app.use(express.json());
 app.use(clerkMiddleware());
 
