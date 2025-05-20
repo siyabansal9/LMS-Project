@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import AppContext from "../../context/AppContext";
+import { AppContext } from '../../context/AppContext'; // ✅ correct
 import { useParams } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import humanizeDuration from "humanize-duration";

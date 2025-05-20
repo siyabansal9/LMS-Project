@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import AppContext from '../../context/AppContext';
+import { AppContext } from '../../context/AppContext'; // ✅ correct
 import { NavLink } from 'react-router-dom';
 import { assets } from '../../assets/assets';
 

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import AppContext from "../../context/AppContext";
+import { AppContext } from '../../context/AppContext'; // ✅ correct
 import { useParams } from "react-router-dom";
 import SearchBar from "../../components/student/SearchBar";
 import CourseCard from "../../components/student/CourseCard";

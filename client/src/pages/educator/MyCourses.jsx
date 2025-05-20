@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import AppContext from "../../context/AppContext";
+import { AppContext } from '../../context/AppContext'; // ✅ correct
 import Loading from "../../components/student/Loading";
 
 const MyCourses = () => {
