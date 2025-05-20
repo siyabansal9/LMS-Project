@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Route, Routes, useMatch } from 'react-router-dom';
+import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/student/Home';
 import CoursesList from './pages/student/CoursesList';
 import CourseDetails from './pages/student/CourseDetails';
@@ -14,13 +14,13 @@ import StudentsEnrolled from './pages/educator/StudentsEnrolled';
 import Navbar from './components/student/Navbar';
 
 const App = () => {
-
-  const isEducatorRoute = useMatch('/educator/*')
+  const location = useLocation();
+  const isEducatorRoute = location.pathname.startsWith('/educator');
 
   return (
     <div className='text-default min-h-screen bg-white'>
-      {!isEducatorRoute &&  <Navbar /> }
-     
+      {!isEducatorRoute && <Navbar />}
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/course-list' element={<CoursesList />} />
@@ -30,13 +30,16 @@ const App = () => {
         <Route path='/player/:courseId' element={<Player />} />
         <Route path='/loading/:path' element={<Loading />} />
 
-        {/* Nested Educator Routes */}
+        {/* Educator nested routes */}
         <Route path='/educator' element={<Educator />}>
-          <Route path='educator' element={<DashBoard />} />
+          <Route index element={<DashBoard />} />
           <Route path='add-course' element={<AddCourse />} />
           <Route path='my-courses' element={<MyCourses />} />
           <Route path='students-enrolled' element={<StudentsEnrolled />} />
         </Route>
+
+        {/* 404 fallback */}
+        <Route path="*" element={<h1 className="p-10 text-center text-2xl">404 - Page Not Found</h1>} />
       </Routes>
     </div>
   );

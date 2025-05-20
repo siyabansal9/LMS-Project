@@ -3,6 +3,17 @@ import AppContext from "../../context/AppContext";
 import { useParams } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import humanizeDuration from "humanize-duration";
+import YouTube from "react-youtube";
+import Footer from "../../components/student/Footer";
+import Rating from "../../components/student/Rating";
+
+// ✅ Helper to extract YouTube Video ID
+const extractYouTubeVideoId = (url) => {
+  const regExp =
+    /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regExp);
+  return match ? match[1] : null;
+};
 
 const Player = () => {
   const { enrolledCourses, calculateChapterTime } = useContext(AppContext);
@@ -33,7 +44,7 @@ const Player = () => {
   return (
     <>
       <div className="p-4 sm:p-10 flex flex-col-reverse md:grid md:grid-cols-2 gap-10 md:px-36">
-        {/* Left Column*/}
+        {/* Left Column */}
         <div className="text-gray-800">
           <h2 className="text-xl font-semibold">Course Structure</h2>
 
@@ -61,7 +72,7 @@ const Player = () => {
                       </p>
                     </div>
                     <p className="text-sm md:text-default">
-                      {chapter.chapterContent.length} lectures -{" "}
+                      {chapter.chapterContent?.length || 0} lectures -{" "}
                       {calculateChapterTime(chapter)}
                     </p>
                   </div>
@@ -73,7 +84,7 @@ const Player = () => {
                     }`}
                   >
                     <ul className="list-disc md:pl-10 pl-4 pr-4 py-2 text-gray-600 border-t border-gray-300">
-                      {chapter.chapterContent.map((lecture, i) => (
+                      {chapter.chapterContent?.map((lecture, i) => (
                         <li key={i} className="flex items-start gap-2 py-1">
                           <img
                             src={false ? assets.blue_tick_icon : assets.play_icon}
@@ -113,11 +124,49 @@ const Player = () => {
                 </div>
               ))}
           </div>
+
+        <div className="flex items-center gap-2 py-3 mt-10">
+          <h1 className="text-xl font-bold">Rate this Course:</h1>
+          <Rating initialRating={0}/>
         </div>
 
-        {/* Right Column - Video Player (Placeholder) */}
-        <div></div>
+        </div>
+
+
+
+        {/* Right Column - Video Player */}
+        <div className="md:mt-10">
+          {playerData ? (
+            <div>
+              {extractYouTubeVideoId(playerData.lectureUrl) ? (
+                <YouTube
+                  key={extractYouTubeVideoId(playerData.lectureUrl)} // 🔑 Forces re-render
+                  videoId={extractYouTubeVideoId(playerData.lectureUrl)}
+                  iframeClassName="w-full aspect-video"
+                />
+              ) : (
+                <p className="text-red-500">Invalid or unsupported video URL</p>
+              )}
+              <div className="flex justify-between items-center mt-1">
+                <p>
+                  {playerData.chapter}.{playerData.lecture}{" "}
+                  {playerData.lectureTitle}
+                </p>
+                <button className="text-blue-600">
+                  {false ? "Completed" : "Mark Complete"}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <img
+              src={courseData?.courseThumbnail || ""}
+              alt={`${courseData?.courseTitle || "Course"} Thumbnail`}
+              className="w-full rounded shadow"
+            />
+          )}
+        </div>
       </div>
+      <Footer/>
     </>
   );
 };
